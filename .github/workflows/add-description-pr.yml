@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Step 2: Checkout do código
+    # Step: Checkout do código
       - name: "Checkout do código"
         uses: actions/checkout@v4
         with:
@@ -19,14 +19,14 @@ jobs:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           fetch-depth: 0
 
-      # Step 3: Get the changed code
+      # Step: Get the changed code
       - name: Get changed code
         id: changed_code
         run: |
           git fetch origin main
           git diff origin/main..origin/${{ github.event.pull_request.head.ref }} >> diff_output.txt
           
-      # Step 1: Autenticação na API da StackSpot
+      # Step: Autenticação na API da StackSpot
       - name: "Autenticar na API da StackSpot"
         id: authenticate_stackspot
         run: |
@@ -41,7 +41,7 @@ jobs:
           echo "access_token=$ACCESS_TOKEN" >> $GITHUB_ENV
           echo $access_token
 
-      # Step 5: Chamada para a API "Remote Quick Command: Descrição do Pull Request"
+      # Step: Chamada para a API "Remote Quick Command: Descrição do Pull Request"
       - name: "Executar Quick Command: Descrição do Pull Request"
         id: execute_description_command
         run: |
@@ -49,14 +49,14 @@ jobs:
           input_data=$(cat diff_output.txt)
           echo $input_data
           json_payload=$(jq -n --arg input_data "$input_data" '{input_data: $input_data}')
-          execution_id_description=$(curl -X POST ${{vars.GENAI_CODE_BUDDY_URL}}/create-execution/adicao-de-descricao-em-pull-requests \
+          execution_id_description=$(curl -X POST ${{vars.GENAI_CODE_BUDDY_URL}}/create-execution/ADICIONAR AQUI O SLUG DO SEU QUICK COMMAND \
             -H "Authorization: Bearer $access_token"  \
             -H "Content-Type: application/json" \
             -d "$json_payload")
           echo "execution_id_description=$execution_id_description" >> $GITHUB_OUTPUT
           echo $execution_id_description
 
-      # Step 6: Verificação do Status da Execução
+      # Step: Verificação do Status da Execução
       - name: "Verificar Status da Execução: Descrição do PR"
         id: check_description_status
         run: |
@@ -76,7 +76,7 @@ jobs:
           echo "pull_request_description=$pull_request_description" >> description_output.txt
           echo $pull_request_description
 
-      # Step 7: Atualizar a descrição do Pull Request
+      # Step: Atualizar a descrição do Pull Request
       - name: "Atualizar Descrição do Pull Request"
         uses: actions/github-script@v7
         with:
