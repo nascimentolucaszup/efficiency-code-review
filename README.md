@@ -11,6 +11,9 @@ Este projeto apresenta uma solução para otimizar o processo de revisão de Pul
 git clone git@github.com:nascimentolucaszup/efficiency-code-review.git
 ```
 
+## Criem um novo projeto no github pessoal
+Assim você podem ter toda liberdade para alterar qualquer aspecto do projeto para adaptar para o cenário que vocês querem testar.
+
 ## Configurações das `Secrets` e `Vars`
 
 **Precisamos configurar informações de `secrets` e `vars` utilizadas em nossos workflows do GitHub Actions.**  
